@@ -1,13 +1,13 @@
-import { useQuery } from "@apollo/client";
+// import { useQuery } from "@apollo/client";
 import { Contract } from "@ethersproject/contracts";
 import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 
 import { Body, Button, Container, Header, Image, Link } from "./components";
-import logo from "./ethereumLogo.png";
+import logo from "./mojito.jpg";
 
 import { addresses, abis } from "@my-app/contracts";
-import GET_TRANSFERS from "./graphql/subgraph";
+// import GET_TRANSFERS from "./graphql/subgraph";
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -47,26 +47,32 @@ function WalletButton() {
   );
 }
 
+// TODO: check if user is connected to Rinkeby
+
 function App() {
-  // Read more about useDapp on https://usedapp.io/
-  const { error: contractCallError, value: tokenBalance } =
-    useCall({
-       contract: new Contract(addresses.ceaErc20, abis.erc20),
-       method: "balanceOf",
-       args: ["0x3f8CB69d9c0ED01923F11c829BaE4D9a4CB6c82C"],
-    }) ?? {};
 
-  const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
+  // console.log(addresses.erc721)
 
-  useEffect(() => {
-    if (subgraphQueryError) {
-      console.error("Error while querying subgraph:", subgraphQueryError.message);
-      return;
-    }
-    if (!loading && data && data.transfers) {
-      console.log({ transfers: data.transfers });
-    }
-  }, [loading, subgraphQueryError, data]);
+  const { value: bal } =
+  useCall({
+      contract: new Contract(addresses.erc721, abis.erc721),
+      method: "balanceOf",
+      args: ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"],
+  }) ?? {};
+
+  // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
+
+  // useEffect(() => {
+  //   if (subgraphQueryError) {
+  //     console.error("Error while querying subgraph:", subgraphQueryError.message);
+  //     return;
+  //   }
+  //   if (!loading && data && data.transfers) {
+  //     console.log({ transfers: data.transfers });
+  //   }
+  // }, [loading, subgraphQueryError, data]);
+
+  // TODO: add a loader
 
   return (
     <Container>
@@ -74,15 +80,15 @@ function App() {
         <WalletButton />
       </Header>
       <Body>
-        <Image src={logo} alt="ethereum-logo" />
-        <p>
-          Edit <code>packages/react-app/src/App.js</code> and save to reload.
-        </p>
-        <Link href="https://reactjs.org">
-          Learn React
-        </Link>
-        <Link href="https://usedapp.io/">Learn useDapp</Link>
-        <Link href="https://thegraph.com/docs/quick-start">Learn The Graph</Link>
+        <Image src={logo} alt="cocktail" />< br />
+        <Button >
+          <strong>Cheers!</strong>
+        </Button>< br />
+        
+        {bal && <p><strong>{bal.toString()}</strong></p>}
+        
+        <p>Hello Web3! 🎉</p>< br/>
+        <Link href="https://strat.cc">Strat</Link>
       </Body>
     </Container>
   );
