@@ -1,11 +1,11 @@
 import "./index.css";
 
 // import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { DAppProvider, Rinkeby } from "@usedapp/core";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
+import { DAppProvider, Rinkeby } from '@usedapp/core'
+import App from './App'
 
 const INFURA_PROJECT_ID = "85c7342e76ff4abdba62b31c07c53499";
 const config = {

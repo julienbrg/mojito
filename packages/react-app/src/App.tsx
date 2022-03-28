@@ -2,12 +2,10 @@
 import { Contract } from "@ethersproject/contracts";
 import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
-
 import { Body, Button, Container, Header, Image, Link } from "./components";
-import logo from "./mojito.jpg";
-
 import { addresses, abis } from "@my-app/contracts";
 // import GET_TRANSFERS from "./graphql/subgraph";
+import logo from "./mojito.jpg";
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -73,6 +71,11 @@ function App() {
   // }, [loading, subgraphQueryError, data]);
 
   // TODO: add a loader
+  // TODO: add mint
+
+  async function cheers() {
+    console.log("Cheers, mate! 🍻")
+  }
 
   return (
     <Container>
@@ -80,14 +83,14 @@ function App() {
         <WalletButton />
       </Header>
       <Body>
-        <Image src={logo} alt="cocktail" />< br />
-        <Button >
+        <Image src={logo} />< br />
+        <Button onClick={cheers}>
           <strong>Cheers!</strong>
         </Button>< br />
         
         {bal && <p><strong>{bal.toString()}</strong></p>}
         
-        <p>Hello Web3! 🎉</p>< br/>
+        <p>Hello Web3! 🎉</p>
         <Link href="https://strat.cc">Strat</Link>
       </Body>
     </Container>
