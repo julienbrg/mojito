@@ -6,13 +6,13 @@ Yet another basic minter.
 
 Testing [useDApp](https://twitter.com/PaulRBerg/status/1505270274018746368).
 
-## Test
+## Run
 
 ```shell
 yarn && yarn react-app:start
 ```
 
-## Usage
+## Use
 
 Click on the `Cheers!` button to make it happen.
 

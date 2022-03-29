@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Body, Button, Container, Header, Image, Link } from "./components";
 import { addresses, abis } from "@my-app/contracts";
 // import GET_TRANSFERS from "./graphql/subgraph";
-import logo from "./mojito.jpg";
+import logo from "./lode-runner.png";
+import { Mint } from './components/mint'
+// import { OwnerOf } from './components/ownerOf'
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -45,18 +47,16 @@ function WalletButton() {
   );
 }
 
-// TODO: check if user is connected to Rinkeby
-
 function App() {
-
-  // console.log(addresses.erc721)
-
+  
+  const { account } = useEthers();
+  
   const { value: bal } =
-  useCall({
+    useCall({
       contract: new Contract(addresses.erc721, abis.erc721),
       method: "balanceOf",
-      args: ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"],
-  }) ?? {};
+      args: [account],
+    }) ?? {};
 
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
@@ -70,28 +70,19 @@ function App() {
   //   }
   // }, [loading, subgraphQueryError, data]);
 
-  // TODO: add a loader
-  // TODO: add mint
-
-  async function cheers() {
-    console.log("Cheers, mate! 🍻")
-  }
-
   return (
     <Container>
       <Header>
         <WalletButton />
       </Header>
       <Body>
-        <Image src={logo} />< br />
-        <Button onClick={cheers}>
-          <strong>Cheers!</strong>
-        </Button>< br />
-        
-        {bal && <p><strong>{bal.toString()}</strong></p>}
-        
+
         <p>Hello Web3! 🎉</p>
-        <Link href="https://strat.cc">Strat</Link>
+        <Image src={logo} />< br />
+        <Mint />
+        {bal && <p>You own <strong>{bal.toString()}</strong> of these.</p>}
+        <Link href="https://github.com/julienbrg/mojito">Github</Link>
+
       </Body>
     </Container>
   );
