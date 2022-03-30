@@ -10,6 +10,8 @@ The create-eth-app team [recently added](https://twitter.com/PaulRBerg/status/15
 
 ## Run
 
+In the `react-app` folder, replace the `.env.example` with a `.env` file. You can get your Web3 Storage token here: [https://web3.storage](https://web3.storage).
+
 ```shell
 yarn && yarn react-app:start
 ```

@@ -44,6 +44,8 @@ function WalletButton() {
 }
 
 function App() {
+
+  console.log(process.env.REACT_APP_WEB3STORAGE_TOKEN)
   
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
