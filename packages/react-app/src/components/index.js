@@ -27,7 +27,7 @@ export const Container = styled.div`
   background-color: #000000;
   display: flex;
   flex-direction: column;
-  height: calc(100vh);
+  height: calc(1000vh);
 `;
 
 export const Header = styled.header`
@@ -42,7 +42,11 @@ export const Header = styled.header`
 
 export const Image = styled.img`
   height: 40vmin;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  pointer-events: none;
+`;
+
+export const Loader = styled.img`
   pointer-events: none;
 `;
 
