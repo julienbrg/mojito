@@ -3266,14 +3266,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@my-app/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@my-app/monorepo@workspace:."
-  dependencies:
-    web3.storage: ^4.0.0
-  languageName: unknown
-  linkType: soft
-
 "@my-app/react-app@workspace:packages/react-app":
   version: 0.0.0-use.local
   resolution: "@my-app/react-app@workspace:packages/react-app"
@@ -4788,6 +4780,14 @@ __metadata:
   checksum: 2605fa124260c61bad38bb65eba30d2f72216a78e94d0ab19b11b4e0327d572b8d530c0c9cc3b0764f727ad26d39e00bf7ebad57781ca6368394d73169c59e46
   languageName: node
   linkType: hard
+
+"Mojito@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "Mojito@workspace:."
+  dependencies:
+    web3.storage: ^4.0.0
+  languageName: unknown
+  linkType: soft
 
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.5
