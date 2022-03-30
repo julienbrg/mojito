@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Body, Button, Container, Header } from "./components";
 // import GET_TRANSFERS from "./graphql/subgraph";
 import { Mint } from './components/mint'
+import { Network } from './components/network'
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -60,6 +61,7 @@ function App() {
   return (
     <Container>
       <Header>
+        <Network />
         <WalletButton />
       </Header>
       <Body>
