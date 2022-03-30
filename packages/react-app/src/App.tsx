@@ -7,7 +7,6 @@ import { addresses, abis } from "@my-app/contracts";
 // import GET_TRANSFERS from "./graphql/subgraph";
 import logo from "./lode-runner.png";
 import { Mint } from './components/mint'
-// import { OwnerOf } from './components/ownerOf'
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -57,6 +56,7 @@ function App() {
       method: "balanceOf",
       args: [account],
     }) ?? {};
+
 
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
