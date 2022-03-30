@@ -19,13 +19,9 @@ export const Mint = () => {
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
-    // TODO: Fix .env
     function getAccessToken() {
-        console.log("getAccessToken ✅")
-        // console.log("process.env.REACT_APP_WEB3STORAGE_TOKEN = ", process.env.REACT_APP_WEB3STORAGE_TOKEN, "😿")
-            
-        // return process.env.REACT_APP_WEB3STORAGE_TOKEN;
-        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVFYkNDMTBGMDE2MUM1YzU4YzE5MmM3RjgxZmIzRjVGNDhmZDAwQkYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDgyOTU2NDA5NzcsIm5hbWUiOiJTcGVhcm1pbnQifQ.duFDn6u1LA7dYPFLZDI6cEvbfFEoS272PvdC4nT6U6g";
+        console.log("getAccessToken ✅")            
+        return process.env.REACT_APP_WEB3STORAGE_TOKEN;
     }
       
     function makeStorageClient() {
@@ -112,6 +108,7 @@ export const Mint = () => {
     // TODO: handle sig denied by user
     // TODO: handle insufficient funds error
     // TODO: invite to switch network if not on Rinkeby
+    // TODO: form and display Etherscan tx url: https://rinkeby.etherscan.io/tx/0x8820a90ba9e587d2c4f81348124e399b09d20c8fa6ecf2234a42ee42f612ad98 
 
     return (
 
