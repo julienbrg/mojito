@@ -2,9 +2,11 @@
 
 Yet another basic minter.
 
+Live demo: [https://mojito-app.netlify.app/](https://mojito-app.netlify.app/)
+
 ## Motivation
 
-Testing [useDApp](https://twitter.com/PaulRBerg/status/1505270274018746368).
+The create-eth-app team [recently added](https://twitter.com/PaulRBerg/status/1505270274018746368) useDApp in their [v1.8.0](https://github.com/paulrberg/create-eth-app/releases/tag/v1.8.0), so I wanted to build a simple React app that's using [create-eth-app](https://github.com/paulrberg/create-eth-app), [useDApp](https://github.com/TrueFiEng/useDApp) and [Web3.Storage](https://web3.storage/).
 
 ## Run
 
@@ -14,7 +16,7 @@ yarn && yarn react-app:start
 
 ## Use
 
-Click on the `Cheers!` button to make it happen.
+Click on the `Mint` button to mint an NFT. ✨
 
 ## Support
 
@@ -24,4 +26,4 @@ Click on the `Cheers!` button to make it happen.
 
 ## Credits
 
-Special thanks to all the contributors of [create-eth-app](https://github.com/paulrberg/create-eth-app) and [useDApp](https://github.com/TrueFiEng/useDApp)!
+Special thanks to all the contributors of [create-eth-app](https://github.com/paulrberg/create-eth-app), [useDApp](https://github.com/TrueFiEng/useDApp) and [Web3.Storage](https://web3.storage/)!
