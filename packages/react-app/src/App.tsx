@@ -1,11 +1,8 @@
 // import { useQuery } from "@apollo/client";
-import { Contract } from "@ethersproject/contracts";
-import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
+import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
-import { Body, Button, Container, Header, Image, Link } from "./components";
-import { addresses, abis } from "@my-app/contracts";
+import { Body, Button, Container, Header } from "./components";
 // import GET_TRANSFERS from "./graphql/subgraph";
-import logo from "./lode-runner.png";
 import { Mint } from './components/mint'
 
 function WalletButton() {
@@ -48,17 +45,6 @@ function WalletButton() {
 
 function App() {
   
-  const { account } = useEthers();
-
-  const { value: bal } =
-
-  useCall({
-    contract: new Contract(addresses.erc721, abis.erc721),
-    method: "balanceOf",
-    args: (account === null ||  account === undefined) ? ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"] : [account],
-  }) ?? {};
-
-
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
   // useEffect(() => {
@@ -77,13 +63,7 @@ function App() {
         <WalletButton />
       </Header>
       <Body>
-
-        <p>Hello Web3! 🎉</p>
-        <Image src={logo} />< br />
         <Mint />
-        {bal && <p>You own <strong>{bal.toString()}</strong> of these.</p>}
-        <Link href="https://github.com/julienbrg/mojito">Github</Link>
-
       </Body>
     </Container>
   );

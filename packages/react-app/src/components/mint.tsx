@@ -1,11 +1,13 @@
-import { Button } from "./";
+import { Button, Link, Loader, Image } from "./";
 import React from 'react'
 import { utils } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
-import { useContractFunction, useEthers} from '@usedapp/core'
+import { useContractFunction, useEthers, useCall} from '@usedapp/core'
 import { Erc721 } from '../../gen/types'
 import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
+import loader from "../assets/reggae-loader.svg";
+import myImage from "../assets/lode-runner.png";
 
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
@@ -20,7 +22,7 @@ export const Mint = () => {
     // TODO: Fix .env
     function getAccessToken() {
         console.log("getAccessToken ✅")
-        console.log("process.env.REACT_APP_WEB3STORAGE_TOKEN = ", process.env.REACT_APP_WEB3STORAGE_TOKEN, "😿")
+        // console.log("process.env.REACT_APP_WEB3STORAGE_TOKEN = ", process.env.REACT_APP_WEB3STORAGE_TOKEN, "😿")
             
         // return process.env.REACT_APP_WEB3STORAGE_TOKEN;
         return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVFYkNDMTBGMDE2MUM1YzU4YzE5MmM3RjgxZmIzRjVGNDhmZDAwQkYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDgyOTU2NDA5NzcsIm5hbWUiOiJTcGVhcm1pbnQifQ.duFDn6u1LA7dYPFLZDI6cEvbfFEoS272PvdC4nT6U6g";
@@ -44,11 +46,11 @@ export const Mint = () => {
         "attributes": [
             {
             "trait_type": "Minted on",
-            "value": "Spearmint"
+            "value": "Mojito"
             },
             {
             "trait_type": "License type",
-            "value": "Private use" // add the license type here e.g. "Public use for all purposes + Right to adapt + Right to add a logo + Merchandising rights"
+            "value": "无" // add the license type here e.g. "Public use for all purposes + Right to adapt + Right to add a logo + Merchandising rights"
             },
             {
             "trait_type": "Resale rights",
@@ -83,17 +85,46 @@ export const Mint = () => {
     console.log("uri: ", uri );
 
     await send(
+        // TODO: check the type of an address
         account as any,
         uri
-    )
-    }
+    )}
+
+    const { value: bal } =
+
+    useCall({
+    contract: new Contract(addresses.erc721, abis.erc721),
+    method: "balanceOf",
+    args: (account === null ||  account === undefined) ? ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"] : [account],
+    }) ?? {};
+
+    const { value: supply } =
+
+    useCall({
+    contract: new Contract(addresses.erc721, abis.erc721),
+    method: "totalSupply",
+    args: [] 
+    }) ?? {};
+
+    const id =+ supply 
+    const url = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
+    
+    // TODO: handle sig denied by user
+    // TODO: handle insufficient funds error
+    // TODO: invite to switch network if not on Rinkeby
 
     return (
-        <div>
-        <Button onClick={onTx}>
-        Mint
-        </Button> 
-        <small>Status: <strong>{state.status}</strong></small>
-        </div>
+
+        <>
+        <h3>Mojito App v1</h3>
+        <Image src={myImage} />
+        {bal && <p>You own <strong>{bal.toString()}</strong> of these.</p>}
+        {state.status === "Mining" || state.status === "PendingSignature" ? 
+        <Loader src={loader}/> : 
+        
+        <Button onClick={onTx}>Mint</Button>}<br />
+        {state.status === "Success" && <Link href={url}>{url}</Link>}
+        
+        </>
     );
 }
