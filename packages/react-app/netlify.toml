@@ -30,7 +30,7 @@
   publish = "output/"
   command = "make publish"
   environment = { 
-      NODE_VERSION = "17.4.0",
+      NODE_VERSION = "16.4.0",
       NODE_OPTIONS = "--max-old-space-size=4096",
       YARN_VERSION = "3.2" 
       }
