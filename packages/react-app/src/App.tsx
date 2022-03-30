@@ -49,13 +49,14 @@ function WalletButton() {
 function App() {
   
   const { account } = useEthers();
-  
+
   const { value: bal } =
-    useCall({
-      contract: new Contract(addresses.erc721, abis.erc721),
-      method: "balanceOf",
-      args: [account],
-    }) ?? {};
+
+  useCall({
+    contract: new Contract(addresses.erc721, abis.erc721),
+    method: "balanceOf",
+    args: (account === null ||  account === undefined) ? ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"] : [account],
+  }) ?? {};
 
 
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);

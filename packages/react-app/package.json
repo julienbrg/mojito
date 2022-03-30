@@ -41,10 +41,10 @@
     ]
   },
   "scripts": {
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "ipfs": "yarn build && ipfs-deploy build/",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "test": "react-scripts test"
   },
   "devDependencies": {
