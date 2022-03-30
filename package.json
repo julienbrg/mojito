@@ -26,5 +26,6 @@
   },
   "dependencies": {
     "web3.storage": "^4.0.0"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }

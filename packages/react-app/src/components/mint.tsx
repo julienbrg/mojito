@@ -112,8 +112,6 @@ export const Mint = () => {
     // TODO: handle sig denied by user
     // TODO: handle insufficient funds error
     // TODO: invite to switch network if not on Rinkeby
-
-    // TODO: check the network before minnting
     // TODO: form and display Etherscan tx url: https://rinkeby.etherscan.io/tx/0x8820a90ba9e587d2c4f81348124e399b09d20c8fa6ecf2234a42ee42f612ad98 
 
     return (
