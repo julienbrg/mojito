@@ -1,4 +1,5 @@
 {
-    "todo-tree.tree.scanMode": "current file",
-    "todo-tree.tree.showCountsInTree": true
+    "todo-tree.tree.scanMode": "workspace",
+    "todo-tree.tree.showCountsInTree": false,
+    "todo-tree.tree.disableCompactFolders": true
 }
