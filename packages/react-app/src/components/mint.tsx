@@ -22,6 +22,8 @@ export const Mint = () => {
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
+        console.log("nft contract address ✅ : ", nftContract.address)
+
         if (chainId !== 4) {
 
             return (
@@ -91,6 +93,7 @@ export const Mint = () => {
         const uri = await storeFiles(makeFileObjects()) + "/lode-runner.json";
         console.log("uri: ", uri );
 
+
         await send(
             // TODO: check the type of an address
             account as any,
@@ -123,27 +126,33 @@ export const Mint = () => {
     // TODO: handle insufficient funds error
     // TODO: invite to switch network if not on Rinkeby
 
-    
-
     return (
 
         <>
         <h3>Mojito App v1</h3>
+
         <Image src={myImage} />
+
         {bal && <p>You own <strong>{bal.toString()}</strong> of these.</p>}
         {state.status === "Mining" || state.status === "PendingSignature" ? 
         <Loader src={loader}/> : 
         
-        <Button onClick={onTx}
-        leftIcon={<FaEthereum />}
-        colorScheme='purple'
-        margin= '4'
-        size='md'
-        variant='outline'
-        >Mint</Button>}
-        {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
-        <Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>
+        <Button 
+            onClick={onTx}
+            leftIcon={<FaEthereum />}
+            colorScheme='purple'
+            margin= '4'
+            size='md'
+            variant='outline'
+            >Mint
+        </Button>}
+
+        {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></>}
+
+        
+        {/* <Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></> */}
+        </>
     )
 }
