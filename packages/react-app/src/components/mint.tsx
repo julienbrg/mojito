@@ -1,4 +1,4 @@
-import { Button, Link, Loader, Image } from "./";
+import { Link, Loader, Image } from "./";
 import React  from 'react'
 import { utils } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
@@ -8,6 +8,9 @@ import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 import loader from "../assets/reggae-loader.svg";
 import myImage from "../assets/lode-runner.png";
+import { Button } from '@chakra-ui/react'
+import { FaEthereum } from 'react-icons/fa';
+
 
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
@@ -131,10 +134,18 @@ export const Mint = () => {
         {state.status === "Mining" || state.status === "PendingSignature" ? 
         <Loader src={loader}/> : 
         
-        <Button onClick={onTx}>Mint</Button>}
-        {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>}
+        <Button onClick={onTx}
+        leftIcon={<FaEthereum />}
+        colorScheme='purple'
+        margin= '4'
+        size='md'
+        variant='outline'
+        >Mint</Button>}
+        {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+        <Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></>
 
-        </>
+        // </>
     );
 }

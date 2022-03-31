@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 
 import { DAppProvider, Rinkeby } from '@usedapp/core'
 import App from './App'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const INFURA_PROJECT_ID = "85c7342e76ff4abdba62b31c07c53499";
 const config = {
@@ -27,8 +28,10 @@ ReactDOM.render(
   <React.StrictMode>
     <DAppProvider config={config}>
       {/* <ApolloProvider client={client}> */}
+      <ChakraProvider>
         <App />
       {/* </ApolloProvider> */}
+      </ChakraProvider>
     </DAppProvider>
   </React.StrictMode>,
   document.getElementById("root"),
