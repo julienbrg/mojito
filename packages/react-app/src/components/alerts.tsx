@@ -1,5 +1,6 @@
 import React  from 'react'
-import { AlertIcon, Alert, Stack } from '@chakra-ui/react'
+// import { AlertIcon, Alert, Stack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 
 export const Alerts = () => {
 
