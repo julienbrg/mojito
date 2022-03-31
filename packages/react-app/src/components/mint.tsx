@@ -8,7 +8,7 @@ import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 import loader from "../assets/reggae-loader.svg";
 import myImage from "../assets/lode-runner.png";
-import { Button } from '@chakra-ui/react'
+import { Button, AlertIcon, Alert, Stack } from '@chakra-ui/react'
 import { FaEthereum } from 'react-icons/fa';
 
 
@@ -145,7 +145,5 @@ export const Mint = () => {
         <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
         <Link href={openseaUrl}>{openseaUrl}</Link>
         <Link href={etherscanUrl}>{etherscanUrl} </Link></>
-
-        // </>
-    );
+    )
 }
