@@ -54,7 +54,7 @@ export const Link = styled.a.attrs({
   target: "_blank",
   rel: "noopener noreferrer",
 })`
-  color: #800080;
+  color: #805AD5;
   margin-top: 8px;
   font-size: calc(2px + 2vmin);
 `;

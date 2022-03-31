@@ -1,9 +1,13 @@
 // import { useQuery } from "@apollo/client";
 import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
-import { Body, Button, Container, Header } from "./components";
+import { Body, Container, Header } from "./components";
 // import GET_TRANSFERS from "./graphql/subgraph";
 import { Mint } from './components/mint'
+import { Alerts } from './components/alerts'
+
+import { Network } from './components/network'
+import { Button } from '@chakra-ui/react'
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -29,6 +33,7 @@ function WalletButton() {
 
   return (
     <Button
+    
       onClick={() => {
         if (!account) {
           activateBrowserWallet();
@@ -36,7 +41,11 @@ function WalletButton() {
           deactivate();
         }
       }}
-    >
+      colorScheme='purple'
+      margin= '4'
+      size='xs'
+      variant='outline'
+      >
       {rendered === "" && "Connect Wallet"}
       {rendered !== "" && rendered}
     </Button>
@@ -45,6 +54,8 @@ function WalletButton() {
 
 function App() {
   
+  // TODO: feat: add NFT subgraph
+
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
   // useEffect(() => {
@@ -60,6 +71,8 @@ function App() {
   return (
     <Container>
       <Header>
+        <Alerts />
+        <Network />
         <WalletButton />
       </Header>
       <Body>
