@@ -9,13 +9,8 @@ import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 import loader from "../assets/reggae-loader.svg";
 import myImage from "../assets/lode-runner.png";
-import { Button } from '@chakra-ui/react'
 import { FaEthereum } from 'react-icons/fa';
-
-// const formatter = new Intl.NumberFormat('en-us', {
-//     minimumFractionDigits: 4,
-//     maximumFractionDigits: 4,
-//   })
+import {Button, useToast } from '@chakra-ui/react'
 
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
@@ -24,16 +19,41 @@ export const Mint = () => {
 
     // const ens = useLookupAddress();
     const { account, chainId } = useEthers();
+    const toast = useToast()
     const userBalance = useEtherBalance(account, { chainId })
-
 
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
-        if (chainId !== 4 || account === null || account === undefined) {
+        if (account === null || account === undefined) {
+
+            toast({
+                position: "bottom-left",
+                title: "Disconnected 😿",
+                description: "It seems like you're not connected. Please click on the Connect Wallet' button.",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+              })
 
             return (
-                <></> // prevents user to click // TODO: find another way to do that
+                <></>
+            )
+        }
+
+        if (chainId !== 4) {
+
+            toast({
+                position: "bottom-left",
+                title: "Wrong network 🌈",
+                description: "Please switch your network to Rinkeby ",
+                status: "warning",
+                duration: 2000,
+                isClosable: true,
+              })
+
+            return (
+                <></>
             )
         }
 
@@ -45,13 +65,20 @@ export const Mint = () => {
         const formatBalance = (balance: BigNumber | undefined) =>
         formatter.format(parseFloat(formatEther(balance ?? BigNumber.from('0'))))
 
-
         if (formatBalance(userBalance) as any < 0.001) {
+            
+            toast({
+                position: "bottom-left",
+                title: "Insufficient funds 💰",
+                description: "You need a handful of Rinkeby ETH to mint your NFT.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
 
             return (
-                <></> // prevents user to click // TODO: find another way to do that
+                <></>
             )
-
         }
 
         function getAccessToken() {
@@ -126,12 +153,22 @@ export const Mint = () => {
 
     useEffect(() => {
         if (state.transaction?.hash) {
-            console.log("✅ tx hash: ", state.transaction?.hash)
+            if (state.status === "Success") {
+                console.log("✅ tx hash: ", state.transaction?.hash)
+                toast({
+                position: "top-left",
+                title: "Success 🎉",
+                description: "You just minted an NFT! Here's your tx hash my friend: " + state.transaction?.hash + ". Thank you for using Mojito app.",
+                status: "success",
+                duration: 8000,
+                isClosable: true,
+              })
+            }
         }
-      }, [state.transaction?.hash]);
+      }, [state.transaction?.hash, toast, state.status]);
 
-      const txHash = state.transaction?.hash
-      const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
+    const txHash = state.transaction?.hash
+    const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
 
     const { value: bal } =
     useCall({
@@ -149,10 +186,7 @@ export const Mint = () => {
 
     const id = Number(supply) - 1
     const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
-    
-    // TODO: handle sig denied by user
-    // TODO: handle insufficient funds error
-    
+
     return (
 
         <>
