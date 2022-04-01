@@ -1,6 +1,6 @@
 import { Link, Loader, Image } from "./";
 import { formatEther } from '@ethersproject/units'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useContractFunction, useEthers, useCall, useEtherBalance} from '@usedapp/core'
@@ -124,8 +124,14 @@ export const Mint = () => {
         )
     }
 
-    const txHash = state.transaction?.hash
-    const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
+    useEffect(() => {
+        if (state.transaction?.hash) {
+            console.log("✅ tx hash: ", state.transaction?.hash)
+        }
+      }, [state.transaction?.hash]);
+
+      const txHash = state.transaction?.hash
+      const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
 
     const { value: bal } =
     useCall({
