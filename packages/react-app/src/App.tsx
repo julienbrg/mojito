@@ -5,7 +5,6 @@ import { Body, Container, Header } from "./components";
 // import GET_TRANSFERS from "./graphql/subgraph";
 import { Mint } from './components/mint'
 import { Alerts } from './components/alerts'
-
 import { Network } from './components/network'
 import { Button } from '@chakra-ui/react'
 
@@ -43,7 +42,7 @@ function WalletButton() {
       }}
       colorScheme='purple'
       margin= '4'
-      size='xs'
+      size='sm'
       variant='outline'
       >
       {rendered === "" && "Connect Wallet"}

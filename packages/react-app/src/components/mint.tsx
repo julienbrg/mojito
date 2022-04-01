@@ -1,6 +1,8 @@
 import { Link, Loader, Image } from "./";
-import React  from 'react'
+// import { formatEther } from '@ethersproject/units'
+import React from 'react'
 import { utils } from 'ethers'
+// import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useContractFunction, useEthers, useCall} from '@usedapp/core'
 import { Erc721 } from '../../gen/types'
@@ -11,39 +13,41 @@ import myImage from "../assets/lode-runner.png";
 import { Button } from '@chakra-ui/react'
 import { FaEthereum } from 'react-icons/fa';
 
+// const formatter = new Intl.NumberFormat('en-us', {
+//     minimumFractionDigits: 4,
+//     maximumFractionDigits: 4,
+//   })
 
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
 
 export const Mint = () => {
 
+    // const ens = useLookupAddress();
     const { account, chainId } = useEthers();
 
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
-        console.log("nft contract address ✅ : ", nftContract.address)
-
-        if (chainId !== 4) {
+        if (chainId !== 4 || account === null || account === undefined) {
 
             return (
-                <></> // prevents user to click
+                <></> // prevents user to click // TODO: find another way to do that
             )
-
         } 
 
         function getAccessToken() {
-            console.log("getAccessToken ✅")            
+            console.log("✅ getAccessToken")            
             return process.env.REACT_APP_WEB3STORAGE_TOKEN;
         }
         
         function makeStorageClient() {
-            console.log("makeStorageClient ✅ ");
+            console.log("✅ makeStorageClient");
             return new Web3Storage({ token: getAccessToken() });
         }
         
         function makeFileObjects() {
-            console.log("makeFileObjects ✅ ");
+            console.log("✅ makeFileObjects");
             const obj = {
             "name": "Lode Runner #1",
             "author": "Julien",
@@ -81,18 +85,19 @@ export const Mint = () => {
         }
         
         async function storeFiles(files) {
-            console.log("storeFiles ✅ ");
+            console.log("✅ storeFiles");
             const client = makeStorageClient();
             const cid = await client.put(files);
-            console.log('stored files with CID ✅: ', cid, "🎉");
+            console.log('✅ stored files with CID: ', cid, "🎉");
             return cid;
         }
         
-        console.log("Hello! 👋 ");
+        console.log("👋 Hello! ");
         makeStorageClient();
         const uri = await storeFiles(makeFileObjects()) + "/lode-runner.json";
-        console.log("uri: ", uri );
+        console.log("✅ uri: ", uri );
 
+        console.log("✅ nft contract address: ", nftContract.address)
 
         await send(
             // TODO: check the type of an address
@@ -104,14 +109,13 @@ export const Mint = () => {
     const txHash = state.transaction?.hash
     const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
 
-    // TODO: read-only https://usedapp-docs.netlify.app/docs/Guides/Connecting/Read-only 
     const { value: bal } =
     useCall({
     contract: new Contract(addresses.erc721, abis.erc721),
     method: "balanceOf",
-    args: (account === null ||  account === undefined) ? ["0xbFBaa5a59e3b6c06afF9c975092B8705f804Fa1c"] : [account],
+    args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
     }) ?? {};
-
+    
     const { value: supply } =
     useCall({
     contract: new Contract(addresses.erc721, abis.erc721),
@@ -124,8 +128,7 @@ export const Mint = () => {
     
     // TODO: handle sig denied by user
     // TODO: handle insufficient funds error
-    // TODO: invite to switch network if not on Rinkeby
-
+    
     return (
 
         <>
@@ -133,7 +136,9 @@ export const Mint = () => {
 
         <Image src={myImage} />
 
-        {bal && <p>You own <strong>{bal.toString()}</strong> of these.</p>}
+        {/* {!!!account || ens ? <p>Please connect your wallet.</p> : <p></p>} */}
+        {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+        
         {state.status === "Mining" || state.status === "PendingSignature" ? 
         <Loader src={loader}/> : 
         
@@ -150,9 +155,6 @@ export const Mint = () => {
         {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
         <Link href={etherscanUrl}>{etherscanUrl} </Link></>}
 
-        
-        {/* <Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></> */}
         </>
     )
 }

@@ -1,17 +1,24 @@
-import { useEthers} from '@usedapp/core'
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useEthers, useLookupAddress } from "@usedapp/core";
 
-export const Network = (yo) => {
+export const Network = () => {
 
-    const { chainId } = useEthers();
+    const [networkMsg, setNetworkMsg] = useState("")
+
+    const ens = useLookupAddress();
+    const { chainId, account } = useEthers();
+
+    useEffect(() => {
+        if (chainId === 4) {
+            setNetworkMsg("Rinkeby ✅");
+        } else {
+            setNetworkMsg("Please switch to Rinkeby 🌈");
+        }
+    },[chainId, setNetworkMsg]);
     
     return (
-
         <p>
-            {chainId === 4 ? 
-            <small>Rinkeby ✅</small> : 
-            <small>Please switch to Rinkeby 🌈</small>
-            }
+            {!!!account || ens ? "" : networkMsg} 
         </p>
     );
 }
