@@ -7,7 +7,7 @@ export const Body = styled.div`
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 100px;
 `;
 
 export const Button = styled.button`
@@ -58,3 +58,4 @@ export const Link = styled.a.attrs({
   margin-top: 8px;
   font-size: calc(2px + 2vmin);
 `;
+
