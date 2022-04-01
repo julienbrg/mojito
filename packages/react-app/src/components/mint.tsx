@@ -1,10 +1,9 @@
 import { Link, Loader, Image } from "./";
-// import { formatEther } from '@ethersproject/units'
+import { formatEther } from '@ethersproject/units'
 import React from 'react'
-import { utils } from 'ethers'
-// import { utils, BigNumber } from 'ethers'
+import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
-import { useContractFunction, useEthers, useCall} from '@usedapp/core'
+import { useContractFunction, useEthers, useCall, useEtherBalance} from '@usedapp/core'
 import { Erc721 } from '../../gen/types'
 import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
@@ -25,6 +24,8 @@ export const Mint = () => {
 
     // const ens = useLookupAddress();
     const { account, chainId } = useEthers();
+    const userBalance = useEtherBalance(account, { chainId })
+
 
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
@@ -34,7 +35,24 @@ export const Mint = () => {
             return (
                 <></> // prevents user to click // TODO: find another way to do that
             )
-        } 
+        }
+
+        const formatter = new Intl.NumberFormat('en-us', {
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 4,
+          })
+
+        const formatBalance = (balance: BigNumber | undefined) =>
+        formatter.format(parseFloat(formatEther(balance ?? BigNumber.from('0'))))
+
+
+        if (formatBalance(userBalance) as any < 0.001) {
+
+            return (
+                <></> // prevents user to click // TODO: find another way to do that
+            )
+
+        }
 
         function getAccessToken() {
             console.log("✅ getAccessToken")            
