@@ -51,11 +51,10 @@ function WalletButton() {
 
 function App() {
   
-  // TODO: add NFT subgraph
-
   const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
   useEffect(() => {
+    // TODO: fix "Error while querying subgraph: Type `Query` has no field `users`"
     if (subgraphQueryError) {
       console.error("Error while querying subgraph:", subgraphQueryError.message);
       return;
