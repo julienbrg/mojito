@@ -1,13 +1,15 @@
 type Token @entity {
   id: ID!
-  decimals: Int
-  name: String
-  symbol: String
+  tokenID: BigInt!
+  contentURI: String
+  name: String!
+  createdAtTimestamp: BigInt!
+  creator: User!
+  owner: User!
 }
 
-type Transfer @entity {
+type User @entity {
   id: ID!
-  from: String!
-  to: String!
-  value: BigInt!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+  created: [Token!]! @derivedFrom(field: "creator")
 }
