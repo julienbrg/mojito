@@ -8,11 +8,10 @@ import { DAppProvider, Rinkeby } from '@usedapp/core'
 import App from './App'
 import { ChakraProvider } from '@chakra-ui/react'
 
-const INFURA_PROJECT_ID = "85c7342e76ff4abdba62b31c07c53499";
 const config = {
   readOnlyChainId: Rinkeby.chainId,
   readOnlyUrls: {
-    [Rinkeby.chainId]: "https://rinkeby.infura.io/v3/" + INFURA_PROJECT_ID,
+    [Rinkeby.chainId]: "https://rinkeby.infura.io/v3/" + process.env.REACT_APP_INFURA_PROJECT_ID,
   },
 }
 
