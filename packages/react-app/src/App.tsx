@@ -51,7 +51,7 @@ function WalletButton() {
 
 function App() {
   
-  // TODO: feat: add NFT subgraph
+  // TODO: add NFT subgraph
 
   // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
