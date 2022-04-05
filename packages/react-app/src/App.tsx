@@ -1,8 +1,8 @@
-// import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 import { Body, Container, Header } from "./components";
-// import GET_TRANSFERS from "./graphql/subgraph";
+import GET_TRANSFERS from "./graphql/subgraph";
 import { Mint } from './components/mint'
 import { Button } from '@chakra-ui/react'
 
@@ -53,17 +53,17 @@ function App() {
   
   // TODO: add NFT subgraph
 
-  // const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
+  const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
 
-  // useEffect(() => {
-  //   if (subgraphQueryError) {
-  //     console.error("Error while querying subgraph:", subgraphQueryError.message);
-  //     return;
-  //   }
-  //   if (!loading && data && data.transfers) {
-  //     console.log({ transfers: data.transfers });
-  //   }
-  // }, [loading, subgraphQueryError, data]);
+  useEffect(() => {
+    if (subgraphQueryError) {
+      console.error("Error while querying subgraph:", subgraphQueryError.message);
+      return;
+    }
+    if (!loading && data && data.transfers) {
+      console.log({ transfers: data.transfers });
+    }
+  }, [loading, subgraphQueryError, data]);
 
   return (
     <Container>
