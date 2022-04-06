@@ -11,11 +11,12 @@ The create-eth-app team [recently added](https://twitter.com/PaulRBerg/status/15
 - [create-eth-app](https://github.com/paulrberg/create-eth-app)
 - [useDApp](https://github.com/TrueFiEng/useDApp)
 - [Web3.Storage](https://web3.storage/)
+- [TheGraph](https://thegraph.com/)
 - [Chakra UI](https://chakra-ui.com/)
 
 ## Run
 
-In the `react-app` folder, replace the `.env.example` with a `.env` file. You can get your Web3 Storage token here: [https://web3.storage](https://web3.storage).
+In the `react-app` folder, replace the `.env.example` with a `.env` file. You can get your Web3 Storage token here: [https://web3.storage](https://web3.storage) and your Infura project ID [there](https://infura.io/).
 
 ```shell
 yarn && yarn react-app:start
