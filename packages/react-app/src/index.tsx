@@ -17,7 +17,7 @@ const config = {
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "https://api.thegraph.com/subgraphs/name/paulrberg/create-eth-app",
+  uri: "https://api.studio.thegraph.com/query/3211/nft-subgraph/v0.0.3",
 });
 
 ReactDOM.render(
