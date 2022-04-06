@@ -59,8 +59,10 @@ function App() {
       console.error("Error while querying subgraph:", subgraphQueryError.message);
       return;
     }
-    if (!loading && data && data.transfers) {
-      // console.log({ transfers: data.transfers });
+    if (!loading && data && data.users) {
+      console.log( "data: ", data );
+      console.log( "User #3 address: ", data.users[3].id );
+      console.log( "User #3 supply: ", data.users[3].tokens.length );
     }
   }, [loading, subgraphQueryError, data]);
 
