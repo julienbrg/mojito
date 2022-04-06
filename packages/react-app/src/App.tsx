@@ -60,7 +60,7 @@ function App() {
       return;
     }
     if (!loading && data && data.transfers) {
-      console.log({ transfers: data.transfers });
+      // console.log({ transfers: data.transfers });
     }
   }, [loading, subgraphQueryError, data]);
 
