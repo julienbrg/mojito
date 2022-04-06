@@ -8,20 +8,16 @@ import { DAppProvider, Rinkeby } from '@usedapp/core'
 import App from './App'
 import { ChakraProvider } from '@chakra-ui/react'
 
-const INFURA_PROJECT_ID = "85c7342e76ff4abdba62b31c07c53499";
 const config = {
   readOnlyChainId: Rinkeby.chainId,
   readOnlyUrls: {
-    [Rinkeby.chainId]: "https://rinkeby.infura.io/v3/" + INFURA_PROJECT_ID,
+    [Rinkeby.chainId]: "https://rinkeby.infura.io/v3/" + process.env.REACT_APP_INFURA_PROJECT_ID,
   },
 }
 
-// You should replace this url with your own and put it into a .env file
-// See all subgraphs: https://thegraph.com/explorer/
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "https://api.thegraph.com/subgraphs/name/paulrberg/create-eth-app",
+  uri: "https://api.studio.thegraph.com/query/3211/nft-subgraph/v0.0.3",
 });
 
 ReactDOM.render(

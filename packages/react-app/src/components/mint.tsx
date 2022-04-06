@@ -3,7 +3,7 @@ import { formatEther } from '@ethersproject/units'
 import React, { useEffect } from 'react'
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
-import { useContractFunction, useEthers, useCall, useEtherBalance} from '@usedapp/core'
+import { useContractFunction, useEthers, useCall, useEtherBalance, useLookupAddress} from '@usedapp/core'
 import { Erc721 } from '../../gen/types'
 import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
@@ -17,7 +17,7 @@ const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
 
 export const Mint = () => {
 
-    // const ens = useLookupAddress();
+    const ens = useLookupAddress();
     const { account, chainId } = useEthers();
     const toast = useToast()
     const userBalance = useEtherBalance(account, { chainId })
@@ -25,7 +25,7 @@ export const Mint = () => {
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
-        if (account === null || account === undefined) {
+        if (account === null || account === undefined || ens === undefined || ens === undefined ) {
 
             toast({
                 position: "bottom-left",
@@ -194,7 +194,6 @@ export const Mint = () => {
 
         <Image src={myImage} />
 
-        {/* {!!!account || ens ? <p>Please connect your wallet.</p> : <p></p>} */}
         {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
         
         {state.status === "Mining" || state.status === "PendingSignature" ? 
