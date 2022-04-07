@@ -1,6 +1,6 @@
 import { Link, Loader, Image } from "./";
 import { formatEther } from '@ethersproject/units'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useContractFunction, useEthers, useCall, useEtherBalance, useLookupAddress} from '@usedapp/core'
@@ -11,8 +11,7 @@ import loader from "../assets/reggae-loader.svg";
 import myImage from "../assets/lode-runner.png";
 import { FaEthereum } from 'react-icons/fa';
 import {Button, useToast } from '@chakra-ui/react'
-import { useQuery } from "@apollo/client";
-import GET_TRANSFERS from "../graphql/subgraph";
+
 
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
@@ -23,26 +22,10 @@ export const Mint = () => {
     const { account, chainId } = useEthers();
     const toast = useToast()
     const userBalance = useEtherBalance(account, { chainId })
-    const [userBal, setUserBal] = useState()
-
-    const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
     
-    useEffect(() => {
-        if (subgraphQueryError) {
-        console.error("Error while querying subgraph:", subgraphQueryError.message);
-        return;
-        }
+    
+    
         
-        if (!loading && data && data.users) {
-            for (var i = 0; i < data.users.length; i++) {
-                console.log( "account: ", account );
-                if (account === data.users[i].id ) {
-                    setUserBal(data.users[i].tokens.length)
-                    console.log( "userBal: ", userBal );
-                }  
-            }
-        }
-    }, [loading, subgraphQueryError, data, account, setUserBal, userBal])
 
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
@@ -191,6 +174,7 @@ export const Mint = () => {
 
     const txHash = state.transaction?.hash
     const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
+    
 
     const { value: bal } =
     useCall({
