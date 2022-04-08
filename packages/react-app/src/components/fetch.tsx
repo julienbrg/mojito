@@ -18,11 +18,11 @@ export function FetchData() {
         }
           
         if (!loading && data && data.users) {
+            console.log("✅ data from subgraph: ", data);
             for (var i = 0; i < data.users.length; i++) {
                 if (account === data.users[i].id ) {
                     setUserBal(data.users[i].tokens.length)
                     console.log("userBal: ", userBal);
-                    console.log("data.users[i].tokens.length: ", data.users[i].tokens.length );
                 }
             }
         }

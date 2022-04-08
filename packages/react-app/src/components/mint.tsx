@@ -12,21 +12,16 @@ import myImage from "../assets/lode-runner.png";
 import { FaEthereum } from 'react-icons/fa';
 import {Button, useToast } from '@chakra-ui/react'
 
-
 const nftInterface = new utils.Interface(abis.erc721)
 const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
 
 export const Mint = () => {
 
     const ens = useLookupAddress();
-    const { account, chainId } = useEthers();
     const toast = useToast()
-    const userBalance = useEtherBalance(account, { chainId })
-    
-    
-    
-        
+    const { account, chainId } = useEthers();
 
+    const userBalance = useEtherBalance(account, { chainId })
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
@@ -150,8 +145,7 @@ export const Mint = () => {
         console.log("✅ nft contract address: ", nftContract.address)
 
         await send(
-            // TODO: check the type of an address
-            account as any,
+            account,
             uri
         )
     }
@@ -174,7 +168,6 @@ export const Mint = () => {
 
     const txHash = state.transaction?.hash
     const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
-    
 
     const { value: bal } =
     useCall({
