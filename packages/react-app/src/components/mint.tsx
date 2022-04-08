@@ -1,6 +1,6 @@
 import { Link, Loader, Image } from "./";
 import { formatEther } from '@ethersproject/units'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useContractFunction, useEthers, useCall, useEtherBalance, useLookupAddress} from '@usedapp/core'
@@ -18,10 +18,10 @@ const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
 export const Mint = () => {
 
     const ens = useLookupAddress();
-    const { account, chainId } = useEthers();
     const toast = useToast()
-    const userBalance = useEtherBalance(account, { chainId })
+    const { account, chainId } = useEthers();
 
+    const userBalance = useEtherBalance(account, { chainId })
     const { state, send } = useContractFunction(nftContract, 'safeMint')
     const onTx = async () => {
 
@@ -145,8 +145,7 @@ export const Mint = () => {
         console.log("✅ nft contract address: ", nftContract.address)
 
         await send(
-            // TODO: check the type of an address
-            account as any,
+            account,
             uri
         )
     }

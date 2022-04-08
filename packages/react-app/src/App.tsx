@@ -1,9 +1,8 @@
-import { useQuery } from "@apollo/client";
 import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Body, Container, Header } from "./components";
-import GET_TRANSFERS from "./graphql/subgraph";
 import { Mint } from './components/mint'
+import { FetchData } from './components/fetch'
 import { Button } from '@chakra-ui/react'
 
 function WalletButton() {
@@ -50,21 +49,6 @@ function WalletButton() {
 }
 
 function App() {
-  
-  const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
-
-  useEffect(() => {
-    // TODO: fix "Error while querying subgraph: Type `Query` has no field `users`"
-    if (subgraphQueryError) {
-      console.error("Error while querying subgraph:", subgraphQueryError.message);
-      return;
-    }
-    if (!loading && data && data.users) {
-      console.log( "data: ", data );
-      console.log( "User #3 address: ", data.users[3].id );
-      console.log( "User #3 supply: ", data.users[3].tokens.length );
-    }
-  }, [loading, subgraphQueryError, data]);
 
   return (
     <Container>
@@ -73,6 +57,7 @@ function App() {
       </Header>
       <Body>
         <Mint />
+        <FetchData />
       </Body>
     </Container>
   );
