@@ -3,7 +3,7 @@ import { Image } from "../components";
 import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
 import { useEffect, useState } from "react";
 import { Body, Container, Header } from "../components";
-import { FetchData } from '../components/fetch'
+// import { FetchData } from '../components/fetch'
 import myImage from "../assets/lode-runner.png";
 import { Button } from '@chakra-ui/react'
 
@@ -48,10 +48,11 @@ function WalletButton() {
       {rendered === "" && "Connect Wallet"}
       {rendered !== "" && rendered}
     </Button>
-  );
-}
 
-export function Nft() {
+    );
+  }
+
+  export function Nft() {
 
   const {address, id } = useParams()
 
@@ -73,9 +74,10 @@ export function Nft() {
         <h3>{name}</h3>
         
         <Image src={myImage} />
+        <br />
         <p>NFT address: {address}</p>
         <p>NFT ID: {id}</p>
-        <FetchData />
+        {/* <FetchData /> */}
 
         {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
         <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
