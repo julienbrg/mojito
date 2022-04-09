@@ -56,7 +56,6 @@ export function Home() {
 
     const { account } = useEthers();
 
-
     const { value: bal } =
     useCall({
     contract: new Contract(addresses.erc721, abis.erc721),
