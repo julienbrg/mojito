@@ -3,6 +3,7 @@ import "./index.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { DAppProvider, Rinkeby } from '@usedapp/core'
 import App from './App'
@@ -25,7 +26,9 @@ ReactDOM.render(
     <ChakraProvider>
       <DAppProvider config={config}>
         <ApolloProvider client={client}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </ApolloProvider>
       </DAppProvider>
     </ChakraProvider>
