@@ -1,14 +1,14 @@
-import { Link, Loader, Image } from "./";
+import { Loader } from "./";
 import { formatEther } from '@ethersproject/units'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useContractFunction, useEthers, useCall, useEtherBalance, useLookupAddress} from '@usedapp/core'
-import { Erc721 } from '../../gen/types'
+import { Erc721 } from '../gen/types'
 import { addresses, abis } from "@my-app/contracts";
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 import loader from "../assets/reggae-loader.svg";
-import myImage from "../assets/lode-runner.png";
 import { FaEthereum } from 'react-icons/fa';
 import {Button, useToast } from '@chakra-ui/react'
 
@@ -17,13 +17,26 @@ const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
 
 export const Mint = () => {
 
+    const [loading, setLoading] = useState(false)
+
     const ens = useLookupAddress();
     const toast = useToast()
     const { account, chainId } = useEthers();
 
     const userBalance = useEtherBalance(account, { chainId })
     const { state, send } = useContractFunction(nftContract, 'safeMint')
+    let navigate = useNavigate();
+
+    const { value: supply } =
+    useCall({
+    contract: new Contract(addresses.erc721, abis.erc721),
+    method: "totalSupply",
+    args: [] 
+    }) ?? {};
+
     const onTx = async () => {
+
+        setLoading(true)
 
         if (account === null || account === undefined || ens === undefined || ens === undefined ) {
 
@@ -148,6 +161,11 @@ export const Mint = () => {
             account,
             uri
         )
+    
+        const id = Number(supply) - 1
+        const address = nftContract.address
+        navigate(`/${address}/${id}`);
+
     }
 
     useEffect(() => {
@@ -164,53 +182,28 @@ export const Mint = () => {
               })
             }
         }
+        
       }, [state.transaction?.hash, toast, state.status]);
-
-    const txHash = state.transaction?.hash
-    const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
-
-    const { value: bal } =
-    useCall({
-    contract: new Contract(addresses.erc721, abis.erc721),
-    method: "balanceOf",
-    args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
-    }) ?? {};
-    
-    const { value: supply } =
-    useCall({
-    contract: new Contract(addresses.erc721, abis.erc721),
-    method: "totalSupply",
-    args: [] 
-    }) ?? {};
-
-    const id = Number(supply) - 1
-    const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
 
     return (
 
         <>
-        <h3>Mojito App v1</h3>
-
-        <Image src={myImage} />
-
-        {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
-        
-        {state.status === "Mining" || state.status === "PendingSignature" ? 
+       
+        {loading === true ? 
         <Loader src={loader}/> : 
         
-        <Button 
-            onClick={onTx}
-            leftIcon={<FaEthereum />}
-            colorScheme='purple'
-            margin= '4'
-            size='md'
-            variant='outline'
-            >Mint
-        </Button>}
-
-        {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>}
+            <Button 
+                onClick={onTx}
+                leftIcon={<FaEthereum />}
+                colorScheme='purple'
+                margin= '4'
+                size='md'
+                variant='outline'
+                
+                >Mint
+            </Button>}
 
         </>
+
     )
 }
