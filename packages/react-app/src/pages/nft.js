@@ -53,39 +53,44 @@ function WalletButton() {
 
 export function Nft() {
 
-    const {address, id } = useParams()
+  const {address, id } = useParams()
 
-    // const txHash = state.transaction?.hash
-    // console.log("state: ", state.transaction )
-    // const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
-    // const id = Number(supply) - 1
-    // const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
+  const name = "Lode Runner #1"
 
-    return (
-      <Container>
-        <Header>
-          <WalletButton />
-        </Header>
-        <Body>
-          <FetchData />
-          <Image src={myImage} />
-          <p>NFT address: {address}</p>
-          <p>NFT ID: {id}</p>
+  // const txHash = state.transaction?.hash
+  // console.log("state: ", state.transaction )
+  // const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
+  // const id = Number(supply) - 1
+  // const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
 
-          {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-          <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+  return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
 
-          {/* {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+        <h3>{name}</h3>
+        
+        <Image src={myImage} />
+        <p>NFT address: {address}</p>
+        <p>NFT ID: {id}</p>
+        <FetchData />
 
-          {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-          <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
-          
-          <nav>
-            <Link to="/">Home</Link>
-          </nav>
-        </Body>
-      </Container>
-    );
-  }
+        {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+
+        {/* {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+
+        {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
+        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+        
+        <nav>
+          <Link to="/">Home</Link>
+        </nav>
+      </Body>
+    </Container>
+  );
+}
 
   

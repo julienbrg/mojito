@@ -7,7 +7,7 @@ export const Body = styled.div`
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 10px;
 `;
 
 export const Button = styled.button`

@@ -30,6 +30,6 @@ export function FetchData() {
   
     return (
       // <>1</>
-      <p>{userBal}</p>
+      <p>1</p>
     )
   }
