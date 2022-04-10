@@ -7,7 +7,7 @@ export const Body = styled.div`
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
-  margin-top: 10px;
+  padding: 5% 20%;
 `;
 
 export const Button = styled.button`
@@ -28,6 +28,19 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(1000vh);
+  text-align: left;
+  
+`;
+
+export const Description = styled.div`
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  height: calc(1000vh);
+`;
+
+export const Details = styled.div`
+  
 `;
 
 export const Header = styled.header`
@@ -42,6 +55,12 @@ export const Header = styled.header`
 
 export const Image = styled.img`
   height: 40vmin;
+  margin-bottom: 10px;
+  pointer-events: none;
+`;
+
+export const Media = styled.img`
+  height: 60vmin;
   margin-bottom: 10px;
   pointer-events: none;
 `;

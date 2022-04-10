@@ -1,62 +1,45 @@
-import {Link, useParams } from "react-router-dom";
-import { Image } from "../components";
-import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Description, Media, Details } from "../components";
 import { Body, Container, Header } from "../components";
 // import { FetchData } from '../components/fetch'
 import myImage from "../assets/lode-runner.png";
 import { Button } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
+
 
 function WalletButton() {
-  const [rendered, setRendered] = useState("");
-
-  const ens = useLookupAddress();
-  const { account, activateBrowserWallet, deactivate, error } = useEthers();
-
-  useEffect(() => {
-    if (ens) {
-      setRendered(ens);
-    } else if (account) {
-      setRendered(shortenAddress(account));
-    } else {
-      setRendered("");
-    }
-  }, [account, ens, setRendered]);
-
-  useEffect(() => {
-    if (error) {
-      console.error("Error while connecting wallet:", error.message);
-    }
-  }, [error]);
+  
+  let navigate = useNavigate();
 
   return (
     
     <Button
     
       onClick={() => {
-        if (!account) {
-          activateBrowserWallet();
-        } else {
-          deactivate();
-        }
+        navigate(`/`);
       }}
       colorScheme='purple'
       margin= '4'
       size='sm'
       variant='outline'
       >
-      {rendered === "" && "Connect Wallet"}
-      {rendered !== "" && rendered}
+      Back home
     </Button>
-
-    );
+   
+  );
   }
 
   export function Nft() {
 
   const {address, id } = useParams()
 
+  console.log("contract address: ", address)
+
+  console.log("id: ",id)
+
   const name = "Lode Runner #1"
+  const author = "Julien"
+  const description = "I'm a Lode Runner player since the age of six. With this amazing unique screenshot, I wanted to express the harsh of the struggle against the ever-growing threat of machines taking over our lives, a super important issue that mankind is facing today. My character is stuck. Let's just reboot everything."
 
   // const txHash = state.transaction?.hash
   // console.log("state: ", state.transaction )
@@ -71,12 +54,21 @@ function WalletButton() {
       </Header>
       <Body>
 
-        <h3>{name}</h3>
+        <h2><strong>{name}</strong></h2>
+        <p><i>by</i> <strong><small>{author}</small></strong></p>
         
-        <Image src={myImage} />
+        <Media src={myImage} />
+
+        <Description>
+        <small>{description}</small>
         <br />
-        <p>NFT address: {address}</p>
-        <p>NFT ID: {id}</p>
+        <p><small>id: {id}</small></p>
+        </Description>
+        
+        <Details>
+        
+        
+        </Details>
         {/* <FetchData /> */}
 
         {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
@@ -87,9 +79,6 @@ function WalletButton() {
         {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
         <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
         
-        <nav>
-          <Link to="/">Home</Link>
-        </nav>
       </Body>
     </Container>
   );

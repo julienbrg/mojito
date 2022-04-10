@@ -176,7 +176,7 @@ export const Mint = () => {
             if (state.status === "Success") {
                 console.log("✅ tx hash: ", state.transaction?.hash)
                 toast({
-                position: "bottom-left",
+                position: "top-left",
                 title: "Success 🎉",
                 description: "You just minted an NFT! Here's your tx hash my friend: " + state.transaction?.hash + ". Thank you for using Mojito app.",
                 status: "success",
