@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Description, Media, Loader } from "../components";
+import { Description, Media, Loader, Link } from "../components";
 import { Body, Container, Header } from "../components";
 // import { FetchData } from '../components/fetch'
 // import myImage from "../assets/lode-runner.png";
@@ -64,6 +64,8 @@ function WalletButton() {
   args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
   }) ?? {};
 
+  const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+id
+  const etherscanUrl = "https://rinkeby.etherscan.io/address/"+address
   
   const { loading, error, nft } = useNft(
     address,
@@ -92,9 +94,7 @@ function WalletButton() {
       </Header>
       <Body>
 
-        {/* {loading === true || bal === null || bal === undefined || nft.author === undefined ?  */}
         {loading === true || bal === null || bal === undefined ? 
-
 
         <Loader src={loader}/> : <>
 
@@ -107,18 +107,15 @@ function WalletButton() {
         <Description>
         <small>{nft.description}</small>
         <br />
-        <p><small>id: {id}</small></p>
         <p><small>
         <Tooltip hasArrow label='No good, bro 😿' bg='red.600'>
           < strong style={{ color: 'red' }}>No license detected </strong>
         </Tooltip>
 
-        | Etherscan | OpenSea | Metadata</small></p>
-
+        | <Link href={etherscanUrl}>Etherscan</Link> | <Link href={openseaUrl}>OpenSea</Link> | <Link href={tokenURI}>Metadata</Link></small></p>
+        
         <br />
         <p>You own <strong>{bal.toString()}</strong> of these.</p>
-
-        <p style={{ color: '#8c1c84' }}><small>{tokenURI}</small></p>
 
         </Description></>}        
         
