@@ -1,14 +1,18 @@
 import { useParams } from "react-router-dom";
-import { Description, Media, Details } from "../components";
+import { Description, Media, Loader } from "../components";
 import { Body, Container, Header } from "../components";
 // import { FetchData } from '../components/fetch'
 import myImage from "../assets/lode-runner.png";
-import { Button } from '@chakra-ui/react'
+import { Button, Tooltip } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
-
+// import { useEffect, useState } from 'react'
+import { useEthers, useCall} from '@usedapp/core'
+import { Contract } from '@ethersproject/contracts'
+import { addresses, abis } from "@my-app/contracts";
+import loader from "../assets/reggae-loader.svg";
 
 function WalletButton() {
-  
+
   let navigate = useNavigate();
 
   return (
@@ -33,19 +37,35 @@ function WalletButton() {
 
   const {address, id } = useParams()
 
-  console.log("contract address: ", address)
+  const { account } = useEthers();
 
+  const { value: name } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "name",
+  args: [],
+  }) ?? {};
+
+  const { value: tokenURI } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "tokenURI",
+  args: [id],
+  }) ?? {};
+
+  const { value: bal } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "balanceOf",
+  args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
+  }) ?? {};
+
+  console.log("contract address: ", address)
   console.log("id: ",id)
 
-  const name = "Lode Runner #1"
+  // const name = "Lode Runner #1"
   const author = "Julien"
   const description = "I'm a Lode Runner player since the age of six. With this amazing unique screenshot, I wanted to express the harsh of the struggle against the ever-growing threat of machines taking over our lives, a super important issue that mankind is facing today. My character is stuck. Let's just reboot everything."
-
-  // const txHash = state.transaction?.hash
-  // console.log("state: ", state.transaction )
-  // const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
-  // const id = Number(supply) - 1
-  // const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
 
   return (
     <Container>
@@ -54,7 +74,12 @@ function WalletButton() {
       </Header>
       <Body>
 
+        {bal === null || bal === undefined  ? 
+
+        <Loader src={loader}/> : <>
+
         <h2><strong>{name}</strong></h2>
+
         <p><i>by</i> <strong><small>{author}</small></strong></p>
         
         <Media src={myImage} />
@@ -63,21 +88,19 @@ function WalletButton() {
         <small>{description}</small>
         <br />
         <p><small>id: {id}</small></p>
-        </Description>
-        
-        <Details>
-        
-        
-        </Details>
-        {/* <FetchData /> */}
+        <p><small>
+        <Tooltip hasArrow label='No good, bro 😿' bg='red.600'>
+          < strong style={{ color: 'red' }}>No license detected </strong>
+        </Tooltip>
 
-        {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+        | Etherscan | OpenSea | Metadata</small></p>
 
-        {/* {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+        <br />
+        <p>You own <strong>{bal.toString()}</strong> of these.</p>
 
-        {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-        <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
+        <p style={{ color: '#8c1c84' }}><small>{tokenURI}</small></p>
+
+        </Description></>}        
         
       </Body>
     </Container>
