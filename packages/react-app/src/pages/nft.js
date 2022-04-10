@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Description, Media, Loader } from "../components";
 import { Body, Container, Header } from "../components";
 // import { FetchData } from '../components/fetch'
-import myImage from "../assets/lode-runner.png";
+// import myImage from "../assets/lode-runner.png";
 import { Button, Tooltip } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 // import { useEffect, useState } from 'react'
@@ -10,6 +10,7 @@ import { useEthers, useCall} from '@usedapp/core'
 import { Contract } from '@ethersproject/contracts'
 import { addresses, abis } from "@my-app/contracts";
 import loader from "../assets/reggae-loader.svg";
+import { useNft } from "use-nft"
 
 function WalletButton() {
 
@@ -37,6 +38,9 @@ function WalletButton() {
 
   const {address, id } = useParams()
 
+  console.log("contract address: ", address)
+  console.log("id: ",id)
+
   const { account } = useEthers();
 
   const { value: name } =
@@ -60,12 +64,26 @@ function WalletButton() {
   args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
   }) ?? {};
 
-  console.log("contract address: ", address)
-  console.log("id: ",id)
+  
+  const { loading, error, nft } = useNft(
+    address,
+    id
+  )
 
-  // const name = "Lode Runner #1"
-  const author = "Julien"
-  const description = "I'm a Lode Runner player since the age of six. With this amazing unique screenshot, I wanted to express the harsh of the struggle against the ever-growing threat of machines taking over our lives, a super important issue that mankind is facing today. My character is stuck. Let's just reboot everything."
+  if (loading) return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
+        <Loader src={loader}/>
+      </Body>
+    </Container>
+  )
+
+  if (error || !nft) return <>Error.</>
+
+  console.log(nft)
 
   return (
     <Container>
@@ -74,18 +92,20 @@ function WalletButton() {
       </Header>
       <Body>
 
-        {bal === null || bal === undefined  ? 
+        {/* {loading === true || bal === null || bal === undefined || nft.author === undefined ?  */}
+        {loading === true || bal === null || bal === undefined ? 
+
 
         <Loader src={loader}/> : <>
 
         <h2><strong>{name}</strong></h2>
 
-        <p><i>by</i> <strong><small>{author}</small></strong></p>
+        <p><i>by</i> <strong><small>{nft.rawData.author}</small></strong></p>
         
-        <Media src={myImage} />
+        <Media src={nft.image} alt="" />
 
         <Description>
-        <small>{description}</small>
+        <small>{nft.description}</small>
         <br />
         <p><small>id: {id}</small></p>
         <p><small>

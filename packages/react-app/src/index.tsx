@@ -8,6 +8,9 @@ import { BrowserRouter } from "react-router-dom";
 import { DAppProvider, Rinkeby } from '@usedapp/core'
 import App from './App'
 import { ChakraProvider } from '@chakra-ui/react'
+import { NftProvider } from "use-nft"
+import { getDefaultProvider } from "ethers"
+
 
 const config = {
   readOnlyChainId: Rinkeby.chainId,
@@ -21,13 +24,20 @@ const client = new ApolloClient({
   uri: "https://api.studio.thegraph.com/query/3211/nft-subgraph/v0.0.3",
 });
 
+// TODO: replace with DAppProvider (useDapp)
+const ethersConfig = {
+  provider: getDefaultProvider(config.readOnlyUrls[Rinkeby.chainId]),
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
       <DAppProvider config={config}>
         <ApolloProvider client={client}>
           <BrowserRouter>
-            <App />
+            <NftProvider fetcher={["ethers", ethersConfig]}>
+              <App />
+            </NftProvider>
           </BrowserRouter>
         </ApolloProvider>
       </DAppProvider>
