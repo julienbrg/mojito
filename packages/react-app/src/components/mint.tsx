@@ -47,7 +47,8 @@ export const Mint = () => {
                 status: "warning",
                 duration: 5000,
                 isClosable: true,
-              })
+            })
+            setLoading(false)
 
             return (
                 <></>
@@ -63,7 +64,8 @@ export const Mint = () => {
                 status: "warning",
                 duration: 2000,
                 isClosable: true,
-              })
+            })
+            setLoading(false)
 
             return (
                 <></>
@@ -87,7 +89,8 @@ export const Mint = () => {
                 status: "error",
                 duration: 3000,
                 isClosable: true,
-              })
+            })
+            setLoading(false)
 
             return (
                 <></>

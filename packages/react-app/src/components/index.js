@@ -7,7 +7,7 @@ export const Body = styled.div`
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
-  margin-top: 100px;
+  padding: 5% 20%;
 `;
 
 export const Button = styled.button`
@@ -28,6 +28,19 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(1000vh);
+  text-align: left;
+  
+`;
+
+export const Description = styled.div`
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  height: calc(1000vh);
+`;
+
+export const Details = styled.div`
+  
 `;
 
 export const Header = styled.header`
@@ -46,6 +59,12 @@ export const Image = styled.img`
   pointer-events: none;
 `;
 
+export const Media = styled.img`
+  height: 60vmin;
+  margin-bottom: 10px;
+  pointer-events: none;
+`;
+
 export const Loader = styled.img`
   pointer-events: none;
 `;
@@ -56,6 +75,5 @@ export const Link = styled.a.attrs({
 })`
   color: #805AD5;
   margin-top: 8px;
-  font-size: calc(2px + 2vmin);
 `;
 

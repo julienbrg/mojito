@@ -11,7 +11,8 @@ The create-eth-app team [recently added](https://twitter.com/PaulRBerg/status/15
 - [create-eth-app](https://github.com/paulrberg/create-eth-app)
 - [useDApp](https://github.com/TrueFiEng/useDApp)
 - [Web3.Storage](https://web3.storage/)
-- [TheGraph](https://thegraph.com/)
+- [useNft](https://use-nft.spectre.xyz/)
+- [TheGraph](https://thegraph.com/) ([WIP](https://github.com/julienbrg/mojito/issues/20))
 - [Chakra UI](https://chakra-ui.com/)
 
 ## Run

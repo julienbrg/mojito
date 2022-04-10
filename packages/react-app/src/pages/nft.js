@@ -1,91 +1,127 @@
-import {Link, useParams } from "react-router-dom";
-import { Image } from "../components";
-import { shortenAddress, useEthers, useLookupAddress } from "@usedapp/core";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Description, Media, Loader, Link } from "../components";
 import { Body, Container, Header } from "../components";
-import { FetchData } from '../components/fetch'
-import myImage from "../assets/lode-runner.png";
-import { Button } from '@chakra-ui/react'
+// import { FetchData } from '../components/fetch'
+// import myImage from "../assets/lode-runner.png";
+import { Button, Tooltip } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
+// import { useEffect, useState } from 'react'
+import { useEthers, useCall} from '@usedapp/core'
+import { Contract } from '@ethersproject/contracts'
+import { addresses, abis } from "@my-app/contracts";
+import loader from "../assets/reggae-loader.svg";
+import { useNft } from "use-nft"
 
 function WalletButton() {
-  const [rendered, setRendered] = useState("");
 
-  const ens = useLookupAddress();
-  const { account, activateBrowserWallet, deactivate, error } = useEthers();
-
-  useEffect(() => {
-    if (ens) {
-      setRendered(ens);
-    } else if (account) {
-      setRendered(shortenAddress(account));
-    } else {
-      setRendered("");
-    }
-  }, [account, ens, setRendered]);
-
-  useEffect(() => {
-    if (error) {
-      console.error("Error while connecting wallet:", error.message);
-    }
-  }, [error]);
+  let navigate = useNavigate();
 
   return (
     
     <Button
     
       onClick={() => {
-        if (!account) {
-          activateBrowserWallet();
-        } else {
-          deactivate();
-        }
+        navigate(`/`);
       }}
       colorScheme='purple'
       margin= '4'
       size='sm'
       variant='outline'
       >
-      {rendered === "" && "Connect Wallet"}
-      {rendered !== "" && rendered}
+      Back home
     </Button>
+   
+  );
+  }
+
+  export function Nft() {
+
+  const {address, id } = useParams()
+
+  console.log("contract address: ", address)
+  console.log("id: ",id)
+
+  const { account } = useEthers();
+
+  const { value: name } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "name",
+  args: [],
+  }) ?? {};
+
+  const { value: tokenURI } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "tokenURI",
+  args: [id],
+  }) ?? {};
+
+  const { value: bal } =
+  useCall({
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "balanceOf",
+  args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
+  }) ?? {};
+
+  const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+id
+  const etherscanUrl = "https://rinkeby.etherscan.io/address/"+address
+  
+  const { loading, error, nft } = useNft(
+    address,
+    id
+  )
+
+  if (loading) return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
+        <Loader src={loader}/>
+      </Body>
+    </Container>
+  )
+
+  if (error || !nft) return <>Error.</>
+
+  console.log(nft)
+
+  return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
+
+        {loading === true || bal === null || bal === undefined ? 
+
+        <Loader src={loader}/> : <>
+
+        <h2><strong>{name}</strong></h2>
+
+        <p><i>by</i> <strong><small>{nft.rawData.author}</small></strong></p>
+        
+        <Media src={nft.image} alt="" />
+
+        <Description>
+        <small>{nft.description}</small>
+        <br />
+        <p><small>
+        <Tooltip hasArrow label='No good, bro 😿' bg='red.600'>
+          < strong style={{ color: 'red' }}>No license detected </strong>
+        </Tooltip>
+
+        | <Link href={etherscanUrl}>Etherscan</Link> | <Link href={openseaUrl}>OpenSea</Link> | <Link href={tokenURI}>Metadata</Link></small></p>
+        
+        <br />
+        <p>You own <strong>{bal.toString()}</strong> of these.</p>
+
+        </Description></>}        
+        
+      </Body>
+    </Container>
   );
 }
-
-export function Nft() {
-
-    const {address, id } = useParams()
-
-    // const txHash = state.transaction?.hash
-    // console.log("state: ", state.transaction )
-    // const etherscanUrl = "https://rinkeby.etherscan.io/tx/" + txHash
-    // const id = Number(supply) - 1
-    // const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
-
-    return (
-      <Container>
-        <Header>
-          <WalletButton />
-        </Header>
-        <Body>
-          <FetchData />
-          <Image src={myImage} />
-          <p>NFT address: {address}</p>
-          <p>NFT ID: {id}</p>
-
-          {/* {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-          <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
-
-          {/* {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
-
-          {state.status === "Success" && <><Link href={openseaUrl}>{openseaUrl}</Link>
-          <Link href={etherscanUrl}>{etherscanUrl} </Link></>} */}
-          
-          <nav>
-            <Link to="/">Home</Link>
-          </nav>
-        </Body>
-      </Container>
-    );
-  }
 
   
