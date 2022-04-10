@@ -75,6 +75,5 @@ export const Link = styled.a.attrs({
 })`
   color: #805AD5;
   margin-top: 8px;
-  font-size: calc(2px + 2vmin);
 `;
 
