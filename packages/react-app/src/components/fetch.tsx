@@ -29,16 +29,16 @@ export function FetchData() {
 
                     if (ethers.utils.getAddress(account as any) === ethers.utils.getAddress(data.users[i].id) ) {
                         usersAddresses.push(data.users[i].tokens.length)
-                        console.log("data.users[i].tokens.length: ", data.users[i].tokens.length);
+                        // console.log("data.users[i].tokens.length: ", data.users[i].tokens.length);
                     }
                 }
-                console.log(usersAddresses)
+                // console.log(usersAddresses)
                 setUserBal(usersAddresses)
             }
         }
     }, [loading, subgraphQueryError, data, account])
 
-    console.log("userBal: ", userBal?.[0] )
+    console.log("✅ user balance: ", userBal?.[0] )
   
     return (
         <>[subgraph] You own {userBal?.[0]} of these.</>

@@ -38,8 +38,8 @@ function WalletButton() {
 
   const {address, id } = useParams()
 
-  console.log("contract address: ", address)
-  console.log("id: ",id)
+  console.log("✅ nft contract address: ", address)
+  console.log("✅ nft id: ",id)
 
   const { account } = useEthers();
 
@@ -83,9 +83,18 @@ function WalletButton() {
     </Container>
   )
 
-  if (error || !nft) return <>Error.</>
+  if (error || !nft) return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
+        <Loader src={loader}/>
+      </Body>
+    </Container>
+  )
 
-  console.log(nft)
+  console.log("✅ nft data: ",nft)
 
   return (
     <Container>
@@ -109,13 +118,21 @@ function WalletButton() {
         <br />
         <p><small>
 
-        <Tooltip hasArrow label='No good, bro 😿' bg='red.600'>
-          < strong style={{ color: 'red' }}>No license detected </strong>
+        <Tooltip hasArrow label='The issuer of this NFT keeps all IP rights on the artwork associated 😿' bg='red.600'>
+        <Link href="https://ato.works/"><strong style={{ color: 'red' }}>No license detected </strong></Link>
         </Tooltip>
 
-        | <Link href={etherscanUrl}>Etherscan</Link> | <Link href={openseaUrl}>OpenSea</Link> | <Link href={tokenURI}>Metadata</Link></small></p>
+        | <Link href={etherscanUrl}>Etherscan</Link> 
         
-        <br />
+        | 
+        <Tooltip hasArrow label='Sometimes it takes a lot of time to display your NFT in OpenSea 😿' bg='red.600'>
+        <Link href={openseaUrl}> OpenSea </Link>
+        </Tooltip>
+         
+        
+        | <Link href={tokenURI}>Metadata</Link></small></p>
+        
+        <br /><br />
         <FetchData />
         <p>You own <strong>{bal.toString()}</strong> of these.</p>
 
