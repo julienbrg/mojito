@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Description, Media, Loader, Link } from "../components";
 import { Body, Container, Header } from "../components";
-// import { FetchData } from '../components/fetch'
+import { FetchData } from '../components/fetch'
 // import myImage from "../assets/lode-runner.png";
 import { Button, Tooltip } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
@@ -108,6 +108,7 @@ function WalletButton() {
         <small>{nft.description}</small>
         <br />
         <p><small>
+
         <Tooltip hasArrow label='No good, bro 😿' bg='red.600'>
           < strong style={{ color: 'red' }}>No license detected </strong>
         </Tooltip>
@@ -115,6 +116,7 @@ function WalletButton() {
         | <Link href={etherscanUrl}>Etherscan</Link> | <Link href={openseaUrl}>OpenSea</Link> | <Link href={tokenURI}>Metadata</Link></small></p>
         
         <br />
+        <FetchData />
         <p>You own <strong>{bal.toString()}</strong> of these.</p>
 
         </Description></>}        
