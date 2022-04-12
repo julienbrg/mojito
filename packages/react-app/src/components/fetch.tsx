@@ -38,7 +38,7 @@ export function FetchData() {
         }
     }, [loading, subgraphQueryError, data, account])
 
-    console.log("✅ user balance: ", userBal?.[0] )
+    console.log("✅ [subgraph] user balance: ", userBal?.[0] )
   
     return (
         <>[subgraph] You own {userBal?.[0]} of these.</>

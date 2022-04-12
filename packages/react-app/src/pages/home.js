@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Body, Container, Header } from "../components";
 import { Mint } from '../components/mint'
-import { FetchData } from '../components/fetch'
+// import { FetchData } from '../components/fetch'
 import { Image } from "../components";
 import { Button } from '@chakra-ui/react'
 import { Contract } from '@ethersproject/contracts'
@@ -78,7 +78,7 @@ export function Home() {
           {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
 
           <Mint />
-          <FetchData />
+          {/* <FetchData /> */}
         </Body>
       </Container>
     );
