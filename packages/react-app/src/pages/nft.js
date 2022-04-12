@@ -96,6 +96,11 @@ function WalletButton() {
   )
 
   console.log("✅ nft license: ", nft.rawData.attributes[1].value)
+  console.log("✅ nft license: ", nft.rawData.license)
+
+  if (nft.rawData.license === "无") {
+
+  }
 
   // const mintedOn = "Āto"
   const mintedOn = nft.rawData.attributes[0].value
@@ -148,9 +153,16 @@ function WalletButton() {
         <p><small>You own <strong>{bal.toString()}</strong> of these.</small></p>
         <p><small>
 
-        <Tooltip hasArrow label='The issuer of this NFT keeps all IP rights on the artwork associated 😿' bg='red.600'>
-        <Link href="https://ato.works/"><strong style={{ color: 'red' }}>No license detected </strong></Link>
-        </Tooltip>
+        {
+          nft.rawData.license === "无" ? 
+
+          <Tooltip hasArrow label='The issuer of this NFT keeps all IP rights on the artwork associated 😿' bg='red.600'>
+          <Link href="https://ato.works/"><strong style={{ color: 'red' }}>No license detected </strong></Link>
+          </Tooltip> : 
+
+        <Tooltip hasArrow label='All good 👍' bg='green.600'>
+        <Link href="https://ato.works/"><strong style={{ color: 'green' }}>Proper IP license detected </strong></Link>
+        </Tooltip> }
 
         | <Link href={etherscanUrl}>Etherscan </Link> 
         
