@@ -59,10 +59,11 @@ export function Home() {
     const { value: bal } =
     useCall({
     contract: new Contract(addresses.erc721, abis.erc721),
-    method: "balanceOf",
-    args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
+    method: "dai",
+    args: [],
     }) ?? {};
 
+    //regarder si on est enregistré avec la fonction
 
     return (
       <Container>
@@ -71,11 +72,9 @@ export function Home() {
         </Header>
         <Body>
           
-          <h3>Mojito App v1</h3>
-          
-          <Image src={myImage} />
 
-          {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+
+          {bal === null || bal === undefined ? <p>You are not registered.</p> : <p>You are registered.</p> }
 
           <Mint />
           {/* <FetchData /> */}
