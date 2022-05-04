@@ -12,8 +12,8 @@ import loader from "../assets/reggae-loader.svg";
 import { FaEthereum } from 'react-icons/fa';
 import {Button, useToast } from '@chakra-ui/react'
 
-const nftInterface = new utils.Interface(abis.erc721)
-const nftContract = new Contract(addresses.erc721, nftInterface) as Erc721
+const nftInterface = new utils.Interface(abis.silo)
+const nftContract = new Contract(addresses.silo, nftInterface) as Erc721
 
 export const Mint = () => {
 

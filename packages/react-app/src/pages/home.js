@@ -5,7 +5,7 @@ import { Mint } from '../components/mint'
 import { Image } from "../components";
 import { Button } from '@chakra-ui/react'
 import { Contract } from '@ethersproject/contracts'
-import myImage from "../assets/lode-runner.png";
+import myImage from "../assets/ato.png";
 import { useEthers, useCall, shortenAddress, useLookupAddress} from '@usedapp/core'
 import { addresses, abis } from "@my-app/contracts";
 
@@ -58,9 +58,9 @@ export function Home() {
 
     const { value: bal } =
     useCall({
-    contract: new Contract(addresses.erc721, abis.erc721),
-    method: "dai",
-    args: [],
+    contract: new Contract(addresses.silo, abis.silo),
+    method: "isAddressExist",
+    args: [account],
     }) ?? {};
 
     //regarder si on est enregistré avec la fonction
@@ -74,7 +74,7 @@ export function Home() {
           
 
 
-          {bal === null || bal === undefined ? <p>You are not registered.</p> : <p>You are registered.</p> }
+          {bal === false ? <p>You are not registered.</p> : <p>You are registered.</p> }
 
           <Mint />
           {/* <FetchData /> */}

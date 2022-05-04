@@ -1,5 +1,5 @@
 // This address points to a dummy ERC-20 contract. Replace it with your own smart contracts.
 const addresses = {
-  erc721: "0x6C2E9dB9Dc9c135C5199Af5fdd40d3D9cBD96196",
+  silo: "0xC5c7C45eEA8F11760d5e63d9CB7c7AE46B3de635",
 };
 export default addresses;

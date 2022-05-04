@@ -1,7 +1,7 @@
-import erc721Abi from "./abis/erc721.json";
+import siloAbi from "./abis/silo.json";
 
 const abis = {
-  erc721: erc721Abi,
+  silo: siloAbi,
 };
 
 export default abis;
