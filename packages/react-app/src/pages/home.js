@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { Body, Container, Header } from "../components";
 import { Mint } from '../components/mint'
-// import { FetchData } from '../components/fetch'
-import { Image } from "../components";
 import { Button } from '@chakra-ui/react'
 import { Contract } from '@ethersproject/contracts'
-import myImage from "../assets/ato.png";
 import { useEthers, useCall, shortenAddress, useLookupAddress} from '@usedapp/core'
 import { addresses, abis } from "@my-app/contracts";
 
@@ -56,14 +53,14 @@ export function Home() {
 
     const { account } = useEthers();
 
-    const { value: bal } =
+    const { value: isRegistered } =
     useCall({
     contract: new Contract(addresses.silo, abis.silo),
     method: "isAddressExist",
-    args: [account],
+    args: (account === null || account === undefined) ? ["0x8CCbFaAe6BC02a73BBe8d6d8017cC8313E4C90A7"] : [account],
     }) ?? {};
 
-    //regarder si on est enregistré avec la fonction
+    console.log("isRegistered:", isRegistered)
 
     return (
       <Container>
@@ -71,13 +68,11 @@ export function Home() {
           <WalletButton />
         </Header>
         <Body>
-          
 
-
-          {bal === false ? <p>You are not registered.</p> : <p>You are registered.</p> }
+          {isRegistered === true ? <p>You are registered! ✨</p> : <p>You are not registered.</p> }
 
           <Mint />
-          {/* <FetchData /> */}
+
         </Body>
       </Container>
     );
