@@ -1,13 +1,12 @@
 import { Loader } from "./";
 import { formatEther } from '@ethersproject/units'
 import { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { utils, BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
-import { useContractFunction, useEthers, useCall, useEtherBalance, useLookupAddress} from '@usedapp/core'
-import { Erc721 } from '../gen/types'
+import { useContractFunction, useEthers, useEtherBalance, useLookupAddress} from '@usedapp/core'
 import { addresses, abis } from "@my-app/contracts";
-import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
+// import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 import loader from "../assets/reggae-loader.svg";
 import { FaEthereum } from 'react-icons/fa';
 import {Button, useToast } from '@chakra-ui/react'
@@ -25,7 +24,7 @@ export const Mint = () => {
 
     const userBalance = useEtherBalance(account, { chainId })
     const { state, send } = useContractFunction(nftContract, 'addIssuer')
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
 
     // function addIssuer(string memory _name, string memory _companyInfo)
 
