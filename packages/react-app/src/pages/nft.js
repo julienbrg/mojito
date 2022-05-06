@@ -53,19 +53,19 @@ function WalletButton() {
 
   const { value: tokenURI } =
   useCall({
-  contract: new Contract(addresses.silo, abis.silo),
+  contract: new Contract(addresses.erc721, abis.erc721),
   method: "tokenURI",
   args: [id],
   }) ?? {};
 
   const { value: bal } =
   useCall({
-  contract: new Contract(addresses.silo, abis.silo),
-  method: "isAddressExist",
-  args: [account],
+  contract: new Contract(addresses.erc721, abis.erc721),
+  method: "balanceOf",
+  args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
   }) ?? {};
 
-  const openseaUrl = "https://testnets.opensea.io/assets/0xC5c7C45eEA8F11760d5e63d9CB7c7AE46B3de635/"+ id
+  const openseaUrl = "https://testnets.opensea.io/assets/0x61681514ea040d19dc4279301adc10bf654d886a/"+ id
   const etherscanUrl = "https://rinkeby.etherscan.io/address/"+ address
   
   const { loading, error, nft } = useNft(
