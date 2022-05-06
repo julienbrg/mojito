@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Body, Container, Header } from "../components";
 import { Mint } from '../components/mint'
-// import { FetchData } from '../components/fetch'
-import { Image } from "../components";
 import { Button } from '@chakra-ui/react'
 import { Contract } from '@ethersproject/contracts'
-import myImage from "../assets/lode-runner.png";
 import { useEthers, useCall, shortenAddress, useLookupAddress} from '@usedapp/core'
 import { addresses, abis } from "@my-app/contracts";
+import { Loader } from "../components";
+import loader from "../assets/reggae-loader.svg";
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -53,33 +52,35 @@ function WalletButton() {
 }
 
 export function Home() {
+  
+  const { account } = useEthers();
 
-    const { account } = useEthers();
+  const { value: isRegisteredRaw } =
 
-    const { value: bal } =
-    useCall({
-    contract: new Contract(addresses.erc721, abis.erc721),
-    method: "balanceOf",
-    args: (account === null || account === undefined) ? ["0x157555B75fE690351b9199384e3C473cCFb6EFab"] : [account],
-    }) ?? {};
+  useCall({
+  contract: new Contract(addresses.silo, abis.silo),
+  method: "isAddressExist",
+  args: (account === null || account === undefined) ? ["0x0000000000000000000000000000000000000000"] : [account],
+  }) ?? {};
+  
+    if (isRegisteredRaw) {
+      var isRegistered = isRegisteredRaw[0]
+    }
 
+  return (
+    <Container>
+      <Header>
+        <WalletButton />
+      </Header>
+      <Body>
 
-    return (
-      <Container>
-        <Header>
-          <WalletButton />
-        </Header>
-        <Body>
-          
-          <h3>Mojito App v1</h3>
-          
-          <Image src={myImage} />
+        {isRegistered === undefined && <Loader src={loader}/>}
+        {isRegistered === true && <p>You are registered! ✨</p>}
+        {isRegistered === false && <p>You are NOT registered.</p>}
 
-          {bal === null || bal === undefined ? <p></p> : <p>You own <strong>{bal.toString()}</strong> of these.</p> }
+        <Mint />
 
-          <Mint />
-          {/* <FetchData /> */}
-        </Body>
-      </Container>
-    );
-  }
+      </Body>
+    </Container>
+  );
+}
