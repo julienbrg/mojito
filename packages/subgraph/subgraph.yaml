@@ -19,7 +19,7 @@ dataSources:
         - User
       abis:
         - name: LodeRunner
-          file: ../contracts/src/abis/silo.json
+          file: ../contracts/src/abis/erc721.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
